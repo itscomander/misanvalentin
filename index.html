@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Quieres ser mi San Valentín? 💖</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', 'Trebuchet MS', system-ui;
+      background: linear-gradient(135deg, #ff5f9e, #ffc371);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 760px;
+      width: 92%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    p { font-size: 1.15rem; line-height: 1.6; }
+
+    .buttons {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 1rem 1.8rem;
+      font-size: 1.05rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    }
+
+    .yes { background: #00e676; color: #054d2c; font-weight: bold; }
+    .no { background: #ff1744; color: #fff; position: relative; }
+    .hidden { display: none; }
+
+    .game {
+      margin-top: 1.5rem;
+      background: rgba(0,0,0,0.2);
+      padding: 1.5rem;
+      border-radius: 16px;
+    }
+
+    /* Corazones */
+    .hearts, .butterflies {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      font-size: 24px;
+      animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+      to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Mariposas */
+    .butterfly {
+      position: absolute;
+      font-size: 22px;
+      animation: fly 12s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fly {
+      0% { transform: translateY(100vh) translateX(0); }
+      100% { transform: translateY(-120vh) translateX(60px); }
+    }
+
+    iframe { border-radius: 12px; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Música Stardew Valley -->
+  <iframe width="0" height="0" src="https://www.youtube.com/embed/ot7uXNQskhs?autoplay=1&loop=1&playlist=ot7uXNQskhs" allow="autoplay"></iframe>
+
+  <div class="card">
+    <h1>💘 Hola, persona favorita 💘</h1>
+    <p>Esto no es solo una pregunta. Es una aventura.</p>
+
+    <!-- Juego 1 -->
+    <div class="game" id="game1">
+      <p><strong>Juego 1:</strong> Elige el corazón correcto 💗</p>
+      <div class="buttons">
+        <button onclick="fail('g1')">💔</button>
+        <button onclick="win1()">💖</button>
+        <button onclick="fail('g1')">🖤</button>
+      </div>
+      <p id="msg1"></p>
+    </div>
+
+    <!-- Juego 2 -->
+    <div class="game hidden" id="game2">
+      <p><strong>Juego 2:</strong> ¿Cuál es la respuesta correcta? 🤔</p>
+      <p>¿Quién tiene la sonrisa más bonita?</p>
+      <div class="buttons">
+        <button onclick="win2()">Tú 😍</button>
+        <button onclick="fail('g2')">Otra persona</button>
+      </div>
+      <p id="msg2"></p>
+    </div>
+
+    <!-- Juego 3 -->
+    <div class="game hidden" id="game3">
+      <p><strong>Juego 3:</strong> Atrapa el botón correcto 🎯</p>
+      <div class="buttons">
+        <button class="yes" onclick="win3()">Este sí 💘</button>
+        <button class="no" id="trap">Este no</button>
+      </div>
+    </div>
+
+    <!-- Pregunta final -->
+    <div id="question" class="hidden">
+      <h1>Después de todo esto… 🌹</h1>
+      <p>¿Quieres ser mi San Valentín?</p>
+      <div class="buttons">
+        <button class="yes" onclick="sayYes()">Sí, quiero 💕</button>
+        <button class="no" id="noBtn">No 😢</button>
+      </div>
+    </div>
+
+    <!-- Final -->
+    <div id="final" class="hidden">
+      <h1>¡¡MISIÓN COMPLETADA!! 🎉💞</h1>
+      <p>San Valentín desbloqueado al 100%.</p>
+      <p>Pero espera… una última decisión importante 🍽️</p>
+
+      <div class="game" id="food">
+        <p><strong>¿Dónde quieres ir a comer en San Valentín?</strong></p>
+        <div class="buttons">
+          <button onclick="chooseFood('🍣 Sushi')">🍣 Sushi</button>
+          <button onclick="chooseFood('🇵🇪 Peruano')">🇵🇪 Peruano</button>
+          <button onclick="chooseFood('🍓 Açaí')">🍓 Açaí</button>
+          <button onclick="chooseFood('🍱 Japonés')">🍱 Japonés</button>
+          <button onclick="chooseFood('🥪 Picnic')">🥪 Picnic</button>
+          <button onclick="chooseFood('🎮 Stardew Valley')">🎮 Stardew Valley</button>
+        </div>
+        <p id="foodResult"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+  <div class="butterflies" id="butterflies"></div>
+
+  <script>
+    const hearts = document.getElementById('hearts');
+    const butterflies = document.getElementById('butterflies');
+
+    function fail(game) {
+      document.getElementById('msg' + game[1]).textContent = 'Esa no era 😏';
+    }
+
+    function win1() {
+      msg1.textContent = 'Correcto 💘';
+      setTimeout(() => { game1.classList.add('hidden'); game2.classList.remove('hidden'); }, 800);
+    }
+
+    function win2() {
+      msg2.textContent = 'Respuesta perfecta 😍';
+      setTimeout(() => { game2.classList.add('hidden'); game3.classList.remove('hidden'); }, 800);
+    }
+
+    const trap = document.getElementById('trap');
+    trap.addEventListener('mouseover', () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      trap.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    function win3() {
+      game3.classList.add('hidden');
+      question.classList.remove('hidden');
+    }
+
+    let noMoves = 0;
+    noBtn.addEventListener('mouseover', () => {
+      noMoves++;
+      noBtn.style.transform = `translate(${Math.random()*150-75}px, ${Math.random()*150-75}px)`;
+      if (noMoves > 4) noBtn.textContent = 'Sabes que sí 😌';
+    });
+
+    function sayYes() {
+      question.classList.add('hidden');
+      final.classList.remove('hidden');
+      launchHearts();
+    }
+
+    function chooseFood(option) {
+      const foodResult = document.getElementById('foodResult');
+      foodResult.textContent = `Plan perfecto elegido: ${option} 💖`;
+      launchHearts();
+    }
+
+    function launchHearts() {
+      for (let i = 0; i < 50; i++) {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.textContent = '💖';
+        h.style.left = Math.random()*100 + 'vw';
+        h.style.animationDuration = 2 + Math.random()*3 + 's';
+        hearts.appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+      }
+    }
+
+    /* Mariposas constantes */
+    setInterval(() => {
+      const b = document.createElement('div');
+      b.className = 'butterfly';
+      b.textContent = '🦋';
+      b.style.left = Math.random() < 0.5 ? '0px' : '95vw';
+      b.style.animationDuration = 8 + Math.random()*6 + 's';
+      butterflies.appendChild(b);
+      setTimeout(() => b.remove(), 15000);
+    }, 1200);
+  </script>
+
+</body>
+</html>
